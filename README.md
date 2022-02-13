@@ -54,31 +54,50 @@ Combinations of each of these augmentations with each other were applied to the 
 
 An evaluation pipeline was then setup, which included getting the metrics as discussed in the Evaluation Framework section. A baseline model was then chosen – ResNet-34, the first model using the residual block framework on ImageNet. This model was selected to test whether the original architecture could generalize well to other image recognition problems, and with a much smaller and limited set of data. 
 
+![image](https://user-images.githubusercontent.com/49609432/153744513-06ebdf00-d92e-49fa-94d2-52cba47561dd.png)
+![image](https://user-images.githubusercontent.com/49609432/153744520-4dc29b0c-0a7f-427a-a0ed-c3ae35d0788e.png)
+![image](https://user-images.githubusercontent.com/49609432/153744527-a9dcb2ec-d53f-4a7b-94b6-2c6cf986710b.png)
+![image](https://user-images.githubusercontent.com/49609432/153744543-79271b15-dfcf-40c2-b60b-e97b39c1ee99.png)
+![image](https://user-images.githubusercontent.com/49609432/153744559-7e7c0528-21fd-4352-9f11-868ac62347e0.png)
+
+
 ## 4.	Experiments & Tuning
 
 #### Baseline Model Performance
 
 The baseline model performed poorly on the dataset, with action_class underfitting, and action overfitting. The model also seemed to plateau very quickly. It was theorized that this may be due to the momentum being too high (0.9) causing the model to have difficulty estimating the unknown target function. Decreasing the momentum was then tried. 
 
+![image](https://user-images.githubusercontent.com/49609432/153744928-742269c3-893b-4f65-91ae-1eb01bee995c.png)
+
 #### Experimentation – Momentum
  
 First, a random search was done, and the momentum was halved to 0.4. A semi-grid search was then performed based on the performance evaluations. This resulted in a slight performance increase, although not nearly as much as was expected. The momentum was thus further reduced to 0.1, which resulted in a performance worse than the baseline model. The model was still generally underfitting for action_class, and underperforming for action. It was thus decided to experiment with increasing the complexity of the model.
+
+![image](https://user-images.githubusercontent.com/49609432/153744976-bbda315a-53c0-48bb-9da8-53a18e5f71d4.png)
 
 #### Experimentation – Increasing Model Complexity
 
 The model’s complexity was increased to address the underfitting concerns. This was done both by adding more hidden layers to the MLP, as well as adding more ResNet blocks. Neither resulted in any kind of performance improvement – both were worse. 
 
+![image](https://user-images.githubusercontent.com/49609432/153744991-d7a2e960-2c32-48d6-9b16-538500f6f023.png)
+
 #### Experimentation – Changing Optimizers
 
 Two additional optimizers were then tested: Adam and RMSprop. Both are adaptive optimizers that don’t need a learning rate schedule specified. Adam is also commonly used for image classification. Both optimizers increased performance on both the training data and validation data, however they were both overfitting.
+
+![image](https://user-images.githubusercontent.com/49609432/153745007-c9398c05-ddda-46b3-b7fe-0162406299a7.png)
 
 #### Experimentation – Regularization
 
 For regularization, first a reduction in the batch size was tested, since it tends to have a regularizing effect. However, there was no considerable difference in performance, and it only increased the time for training. L1 and L2 regularization were then tested, with the lambda parameter set to 0.01 as a default at first. It was noted from this that the model was severely underperforming, therefore the lambda was reduced ten-fold and then tuned from there on using half-step values between 0.01 and 0.001. it was determined that an L2 regularization with 0.001 lambda was best. The overall performance of the model seemed to be hitting a ceiling at this point, thus the focus was shifted to trying a different activation function for the ResNet blocks.
 
+![image](https://user-images.githubusercontent.com/49609432/153745047-b277ace0-5ad1-4236-a92c-2aa3afc01f59.png)
+
 #### Experimentation – Activation Function
 
 Leaky ReLU was tried, which has a small slope for negative values instead of a flat slop like ReLU. It is commonly used for image classification tasks and tends to have better performance. However, there was no improvement in performance, in fact it did slightly worse. 
+
+![image](https://user-images.githubusercontent.com/49609432/153745051-81d2d349-047a-4211-9ba3-0ff181f7dfa0.png)
 
 ## 5.	Ultimate Judgment, Analysis & Limitations
 
