@@ -1,7 +1,7 @@
 # Deep Learning for Human Action Recognition
-#### Nishq Ravindranath
+### Nishq Ravindranath
 
-## 1	Problem Definition and Analysis
+## 1.	Problem Definition and Analysis
 
 The problem here is to predict human actions from the dataset of images provided. It falls under the area of Human action recognition (HAR).  This is a Multi-task learning problem, with two tasks that need to be predicted, one is the action class, and the other is the action, which is a subset of specific action classes. There are 21 types of actions belonging to 5 action classes. 
 
@@ -11,7 +11,7 @@ The data was first loaded in, and a sample of the images were visualized, and th
 
 The dataset was then analysed in terms of its class distribution. This was done for both action_class, and the action within them. For action_class, it was found that there is a class imbalance in the dataset, with "other_activity" having as many as 3 times the number of images as "playing musical instrument". The classes "domestic work", "interacting with animal" and "using_comm_device" are nearly evenly represented in this dataset. The same was done for action within each action_class, and it was found that “playing_musical_instrument" and "interacting_with_animal" are well balanced. The other 3 action classes have a lot of imbalances with their sub actions. The EDA guided the choice of the performance metric for each class and the subsequent evaluation framework. 
 
-## 2	Evaluation Framework
+## 2.	Evaluation Framework
 
 The performance metric chosen for each class is as follows:
 
@@ -22,7 +22,7 @@ The performance metric chosen for each class is as follows:
 
 Hold-out validation was used to evaluate the different models, with the two main performance metrics’ validation score assessed for each class. Tensorboard was used to monitor the performance metric at each epoch, and early stopping with a patience ranging from 5-10 (depending on the parameter changes) was employed to stop the model if the model’s performance started to plateau. Finally, the results of the models were plotted to compare and evaluate the changes of the different parameters. 
 
-## 3	Approach & Justifications
+## 3.	Approach & Justifications
 
 Since the images were of different sizes, they were all first resized to a unified 224x224. This size was chosen as it is a common image size to input for images that convey more complex data. Furthermore, upsizing smaller images to a higher resolution might make them lose some details due to fuzziness. Higher resolution images will also require a lot more computational time for a convolutional neural network. 
 
@@ -37,7 +37,7 @@ Combinations of each of these augmentations with each other were applied to the 
 
 An evaluation pipeline was then setup, which included getting the metrics as discussed in the Evaluation Framework section. A baseline model was then chosen – ResNet-34, the first model using the residual block framework on ImageNet. This model was selected to test whether the original architecture could generalize well to other image recognition problems, and with a much smaller and limited set of data. 
 
-## 4	Experiments & Tuning
+## 4.	Experiments & Tuning
 
 #### Baseline Model Performance
 
@@ -63,7 +63,7 @@ For regularization, first a reduction in the batch size was tested, since it ten
 
 Leaky ReLU was tried, which has a small slope for negative values instead of a flat slop like ReLU. It is commonly used for image classification tasks and tends to have better performance. However, there was no improvement in performance, in fact it did slightly worse. 
 
-## 5	Ultimate Judgment, Analysis & Limitations
+## 5.	Ultimate Judgment, Analysis & Limitations
 
 The final model chosen was the custom tuned model with momentum = 0.4, same complexity as the baseline model, Adam as an optimizer, and L2 regularization with lambda = 0.001. This model had the best performance, with an action_class accuracy of 0.65, and a top 5 action accuracy of 0.83. This is not a great performance, however, given the limited amount of data and the various class imbalances, it can be considered decent.  
 
@@ -71,7 +71,7 @@ ResNet-34 might not be suitable for multi-task learning on this dataset, unless 
 
 Moreover, dropout regularization can also be tested with an increased model complexity with Adam as an optimizer. Furthermore, experiments can also be done on changing the padding, number of filters, stride length, and type of pooling in the convolutional layers. 
 
-## 6	References:
+## 6.	References:
 -	Parsa, Behnoosh, and Ashis G. Banerjee. “A Multi-Task Learning Approach for Human Activity Segmentation and Ergonomics Risk Assessment.” 2021 IEEE Winter Conference on Applications of Computer Vision (WACV), 2021, doi:10.1109/wacv48630.2021.00240. 
 -	Siyal, Ahsan Raza, et al. “Still Image-Based Human Activity Recognition with DEEP Representations and Residual Learning.” International Journal of Advanced Computer Science and Applications, vol. 11, no. 5, 2020, doi:10.14569/ijacsa.2020.0110561. 
 -	He, Kaiming, et al. “Deep Residual Learning for Image Recognition.” 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016, doi:10.1109/cvpr.2016.90. 
