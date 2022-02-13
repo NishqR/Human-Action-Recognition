@@ -5,6 +5,23 @@
 
 The problem here is to predict human actions from the dataset of images provided. It falls under the area of Human action recognition (HAR).  This is a Multi-task learning problem, with two tasks that need to be predicted, one is the action class, and the other is the action, which is a subset of specific action classes. There are 21 types of actions belonging to 5 action classes. 
 
+### Dataset
+
+The data for this assignment is a modified version of the data available at: [Stanford 40 Actions](http://vision.stanford.edu/Datasets/40actions.html)
+
+The modified Stanford 40 Action Dataset contains images of humans performing 21 actions from 5 action-classes. There are 3030 training images in total with 100-200 images per action. The test set contains 2100 images. The image dimensions vary across images. 
+
+The model(s) need to predict two outputs:   
+
+1. **action** = {'riding\_a\_horse', 'walking\_the\_dog', 'feeding\_a\_horse', 'playing\_guitar', 'playing\_violin', 'washing\_dishes', 'cutting\_vegetables', 'gardening',   'cleaning\_the\_floor', 'cooking', 'climbing',  'jumping',  'riding\_a\_bike',  'running',  'shooting\_an\_arrow',  'rowing\_a\_boat',  'taking\_photos', 'texting\_message',  'watching\_TV',  'using\_a\_computer',  'phoning'},  
+
+2. **action_class** = {'Interacting\_with\_animal', 'playing\_musical\_instrument', 'domestic\_work', 'other\_activity', 'using\_comm\_device'}
+             
+#### Files:
+- `Images.zip`: Contain all the images (test and train set). Has to be obtained from the website. 
+- `S40AR_train_data.csv`: This data was used in developing the models. 
+- `S40AR_test_data.csv`: This data was used to evaluate the models. 
+
 ### Exploratory Data Analysis
 
 The data was first loaded in, and a sample of the images were visualized, and the differences in their dimensions was checked. The maximum and minimum values from the dimensions of the images were then calculated to further guide what sort of technique should be used for the data loader. It was found that the smallest x and y values of the images was 200, and the largest was 961. This is a very large variance in dimensions, and for our model we want them all to have the same dimensions, while also retaining the characteristics of each image that makes them have their associated label. 
